@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Numbler — Not The New York Times</title>
+    <link rel="icon" type="image/x-icon" href="img/numbler-favicon.ico">
+    <link rel="stylesheet" href="reset.css" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.3.2/css/flag-icons.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet" />
+    <link href="https://db.onlinewebfonts.com/c/4789cf828c01b22acb9b2b73ee91aa0d?family=NYTKarnakCondensed"
+        rel="stylesheet">
+    <link href="">
+
+</head>
+
+<body>
+    <header class="wordle-header">
+        <div class="left">
+            <div class="language-dropdown">
+                <button id="currentLanguage" class="language-btn"><span class="fi fi-us"></span>US</button>
+                <ul id="languageOptions" class="language-menu hidden">
+                    <li data-lang="en-US">en-US</li>
+                    <li data-lang="pt-BR">pt-BR</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="right">
+            <button id="howToPlayBtn" class="how-to-play-btn" aria-label="How to play"><svg aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg" height="32" viewBox="0 0 32 32" width="32" class="game-icon"
+                    data-testid="icon-forum">
+                    <path fill="#f8f8f8"
+                        d="M15 24H17.6667V21.3333H15V24ZM16.3333 2.66666C8.97333 2.66666 3 8.63999 3 16C3 23.36 8.97333 29.3333 16.3333 29.3333C23.6933 29.3333 29.6667 23.36 29.6667 16C29.6667 8.63999 23.6933 2.66666 16.3333 2.66666ZM16.3333 26.6667C10.4533 26.6667 5.66667 21.88 5.66667 16C5.66667 10.12 10.4533 5.33332 16.3333 5.33332C22.2133 5.33332 27 10.12 27 16C27 21.88 22.2133 26.6667 16.3333 26.6667ZM16.3333 7.99999C13.3867 7.99999 11 10.3867 11 13.3333H13.6667C13.6667 11.8667 14.8667 10.6667 16.3333 10.6667C17.8 10.6667 19 11.8667 19 13.3333C19 16 15 15.6667 15 20H17.6667C17.6667 17 21.6667 16.6667 21.6667 13.3333C21.6667 10.3867 19.28 7.99999 16.3333 7.99999Z">
+                    </path>
+                    </path>
+                </svg></button>
+        </div>
+    </header>
+
+    <div class="container">
+        <span class="arrow" id="arrowUp">
+            <svg class="caret-icon" width="30" height="30" viewBox="0 0 24 24" fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M12 7C11.7 7 11.4 7.1 11.2 7.3L5.3 13.2C4.9 13.6 5.2 14.3 5.8 14.3H18.2C18.8 14.3 19.1 13.6 18.7 13.2L12.8 7.3C12.6 7.1 12.3 7 12 7Z" />
+            </svg>
+        </span>
+        <div class="guess-wrapper">
+            <div class="guess-container" id="guessContainer">
+                <div class="digit"> </div>
+                <div class="digit"> </div>
+                <div class="digit"> </div>
+            </div>
+
+        </div>
+        <span class="arrow" id="arrowDown">
+            <svg class="caret-icon" width="30" height="30" viewBox="0 0 24 24" fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M12 17C12.3 17 12.6 16.9 12.8 16.7L18.7 10.8C19.1 10.4 18.8 9.7 18.2 9.7H5.8C5.2 9.7 4.9 10.4 5.3 10.8L11.2 16.7C11.4 16.9 11.7 17 12 17Z" />
+            </svg>
+        </span>
+        <p id="remainingAttempts">ㅤ</p>
+        <p id="previousGuessText" class="previous-guess-text">ㅤ</p>
+        <div>
+            <p id="message"></p>
+        </div>
+
+        <div class="keyboard">
+            <button class="key">1</button>
+            <button class="key">2</button>
+            <button class="key">3</button>
+            <button class="key">4</button>
+            <button class="key">5</button>
+            <button class="key">6</button>
+            <button class="key">7</button>
+            <button class="key">8</button>
+            <button class="key">9</button>
+            <button class="key" id="enter" style="font-size: 12px; font-weight: 600;">ENTER</button>
+            <button class="key">0</button>
+            <button class="key" id="backspace" aria-label="Backspace">
+                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 24 24" width="20"
+                    class="game-icon" data-testid="icon-backspace">
+                    <path fill="#f8f8f8"
+                        d="M22 3H7c-.69 0-1.23.35-1.59.88L0 12l5.41 8.11c.36.53.9.89 1.59.89h15c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H7.07L2.4 12l4.66-7H22v14zm-11.59-2L14 13.41 17.59 17 19 15.59 15.41 12 19 8.41 17.59 7 14 10.59 10.41 7 9 8.41 12.59 12 9 15.59z" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <footer class="wordle-footer">
+        <ul class="footer-links">
+            <li><span>© 2025 Numbler (not actually)</span></li>
+            <li><span>Made by noelledotjpg</span></li>
+            <li><a href="https://noelledotjpg.neocities.com" target="_blank" rel="noopener noreferrer">Neocities</a>
+            </li>
+            <li><a href="https://github.com/noelledotjpg" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+        </ul>
+    </footer>
+
+    <!-- Modal -->
+    <div id="howToPlayModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle"
+        tabindex="-1">
+        <div class="modal">
+            <h2 id="modalTitle">How To Play</h2>
+            <h2 id="modalSubTitle">Guess the Numbler in 10 tries.</h2>
+            <button class="close-btn" type="button" aria-label="Close"><svg aria-hidden="true" height="30"
+                    viewBox="0 0 24 24" width="30" class="game-icon" data-testid="icon-close">
+                    <path fill="#f8f8f8"
+                        d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z">
+                    </path>
+                </svg></button>
+            <div class="howToPlayText">
+                <li id="howToPlayItem1">Each guess has to be a number between 1 and 100.</li>
+                <li id="howToPlayItem2">The arrows indicate if the secret number is higher or lower than your guess.
+                </li>
+            </div>
+            <div class="howToPlayExamples">
+                <p id="howToPlayExamples">Examples</p>
+            </div>
+            <div class="arrow" id="miniArrowUp">
+                <svg class="caret-icon" width="30" height="30" viewBox="0 0 24 24" fill="currentColor"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M12 7C11.7 7 11.4 7.1 11.2 7.3L5.3 13.2C4.9 13.6 5.2 14.3 5.8 14.3H18.2C18.8 14.3 19.1 13.6 18.7 13.2L12.8 7.3C12.6 7.1 12.3 7 12 7Z" />
+                </svg>
+            </div>
+            <div class="miniDigWrapper">
+                <div class="miniDigit">2</div>
+                <div class="miniDigit">1</div>
+                <div class="miniDigitEmpty"></div>
+            </div>
+            <div class="arrow" id="miniArrowDown">
+                <svg class="caret-icon" width="30" height="30" viewBox="0 0 24 24" fill="currentColor"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M12 17C12.3 17 12.6 16.9 12.8 16.7L18.7 10.8C19.1 10.4 18.8 9.7 18.2 9.7H5.8C5.2 9.7 4.9 10.4 5.3 10.8L11.2 16.7C11.4 16.9 11.7 17 12 17Z" />
+                </svg>
+            </div>
+            <div class="howToPlayText">
+                <p id="howToPlayExampleExplanation" style="margin-top: 8px;">The number is <strong>bigger</strong> than
+                    21.</p>
+            </div>
+
+            <div class="arrow" id="miniArrowUp2">
+                <svg class="caret-icon" width="30" height="30" viewBox="0 0 24 24" fill="currentColor"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M12 7C11.7 7 11.4 7.1 11.2 7.3L5.3 13.2C4.9 13.6 5.2 14.3 5.8 14.3H18.2C18.8 14.3 19.1 13.6 18.7 13.2L12.8 7.3C12.6 7.1 12.3 7 12 7Z" />
+                </svg>
+            </div>
+            <div class="miniDigWrapper">
+                <div class="miniDigit">4</div>
+                <div class="miniDigit">5</div>
+                <div class="miniDigitEmpty"></div>
+            </div>
+            <div class="arrow" id="miniArrowDown2">
+                <svg class="caret-icon" width="30" height="30" viewBox="0 0 24 24" fill="currentColor"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M12 17C12.3 17 12.6 16.9 12.8 16.7L18.7 10.8C19.1 10.4 18.8 9.7 18.2 9.7H5.8C5.2 9.7 4.9 10.4 5.3 10.8L11.2 16.7C11.4 16.9 11.7 17 12 17Z" />
+                </svg>
+            </div>
+            <div class="howToPlayText">
+                <p id="howToPlayExampleExplanation" style="margin-top: 8px;">The number is <strong>smaller</strong> than
+                    45.</p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Modal win -->
+    <div id="resultModal" class="modal-overlay" role="dialog" aria-modal="true" tabindex="-1">
+        <div class="modal">
+            <p id="resultMessage"></p>
+            <button id="playAgainBtn" class="play-again-btn">Play Again</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
