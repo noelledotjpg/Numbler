@@ -5,3 +5,7 @@ Guess a number between **1** and **100**, you have **10** tries. Every time you 
 <sub>Wordle by Josh Wardle</sub><br>
 <sub>Karnak Normal/Condensed font by New York Times</sub><br>
 <sub>Libre Frank font by Google Fonts</sub>
+
+### Changelog
+**v1.0**
+- Initial release 
